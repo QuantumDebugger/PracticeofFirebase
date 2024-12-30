@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Practice of Firebase</string>
+    <string name="enter_your_name">Enter Your Name</string>
+    <string name="enter_your_roll_number">Enter Your Roll Number</string>
+    <string name="enter_your_class">Enter Your Class</string>
+    <string name="add">ADD</string>
+</resources>
