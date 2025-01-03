@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
                     DocumentChange.Type.MODIFIED -> {
                         itemModel.let {
-                            var index = getIndex(itemModel)
+                            val index = getIndex(itemModel)
                             if (index > -1) {
                                 itemData.set(index, it)
                             }
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //-------------Indexing for Model & itemData--------
-    private fun getIndex(itemModel: ItemData) {
+    private fun getIndex(itemModel: ItemData): Int {
         var index = -1
         index = itemData.indexOfFirst { element ->
             element.id?.equals(itemModel.id) == true
