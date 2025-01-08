@@ -20,9 +20,8 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.toObject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RecInterface {
 
     //--------Declaration---------------
     private var binding: ActivityMainBinding? = null
@@ -105,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         //--------------FireBase Function------------
 
 
-        //--------------ADD FUNCTION WITH FAB-----
+        //--------------ADD FUNCTION WITH FAB AND ADD BTN-----
 
         binding?.btnFab?.setOnClickListener {
             Dialog(this).apply {
@@ -137,11 +136,11 @@ class MainActivity : AppCompatActivity() {
                         )
 
                         db.collection(collectName).add(model).addOnCompleteListener {
-                            Toast.makeText(this, "Data Uploaded Successfully", Toast.LENGTH_SHORT)
-                                .show()
-                        }.addOnFailureListener {
-                            Toast.makeText(this, "Data upload Unsuccessfully", Toast.LENGTH_SHORT)
-                                .show()
+                            if (it.isSuccessful){
+                                println("Data Saved, ${it.result}")
+                        }else{
+                            println("Error in Adding")
+                            }
                         }
                         myAdapter.notifyDataSetChanged()
                         dismiss()
@@ -153,7 +152,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        //--------------ADD FUNCTION WITH FAB-----
+        //--------------ADD FUNCTION WITH FAB AND ADD BTN-----
+
+
+
 
 
     }
@@ -183,6 +185,63 @@ class MainActivity : AppCompatActivity() {
 
     }
     //-------------firebase convert object-------
+
+    //--------------Update data functionality------
+
+    override fun updateBtn(position: Int) {
+        Toast.makeText(this, "$position", Toast.LENGTH_SHORT).show()
+        Dialog(this).apply {
+            setContentView(R.layout.custom_fab_layout)
+            window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            val nameEt = findViewById<EditText>(R.id.etName)
+            val classEt = findViewById<EditText>(R.id.etClass)
+            val rollNoEt = findViewById<EditText>(R.id.etRollNo)
+            val updateBtn = findViewById<Button>(R.id.btnAdd)
+
+            val className = itemData[position].stuName
+            val classData = itemData[position].stuClass
+            val rollNoData = itemData[position].stuRoll
+
+            nameEt.setText(className)
+            classEt.setText(classData)
+            rollNoEt.setText(rollNoData.toString())
+
+            updateBtn.setOnClickListener {
+                if (nameEt.text.isNullOrEmpty()){
+                    nameEt.error = "Enter Your Name"
+                }else if (classEt.text.isNullOrEmpty()){
+                    classEt.error = "Enter Your Class"
+                }else if (rollNoEt.text.isNullOrEmpty()){
+                    rollNoEt.error = "Enter Your Roll Number"
+                }else{
+
+                }
+
+            }
+
+
+
+
+
+
+
+
+        }
+    }
+
+    override fun deleteBtn(position: Int) {
+        TODO("Not yet implemented")
+    }
+
+
+
+
+
+
+
+
+
 
 
 }
